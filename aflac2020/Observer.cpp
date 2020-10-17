@@ -172,7 +172,7 @@ void Observer::operate() {
 
 // modify start by Furuta 2020.09.23
     // monitor good timing to swith to BlindRunner
-    if((countAng != -1) && (notifyDistance != 0.0))  {
+    if (countAng != -1) {
         if ((curAngL + curAngR) < AVERAGE_START) {
             // cutoff initial noize
             // syslog(LOG_NOTICE, "%08u, initial cutting off", clock->now());         
@@ -194,20 +194,18 @@ void Observer::operate() {
                 // Delta has been across Average
                 syslog(LOG_NOTICE, "%08u, diffAng = %d, sum = %d, cnt = %d", clock->now(), diffAng, sumDiffAng, countAng);
                 syslog(LOG_NOTICE, "%08u, Pass control to BlindRunner, prev = %d, delta = %d", clock->now(), (int)(prevDeltaDiff*1000), (int)(deltaDiff*1000)); 
-                countAng = -1;
-                notifyDistance = 0.0;
-                stateMachine->sendTrigger(EVT_dist_reached);
+                countAng = -1;  // event to be sent only once
+                stateMachine->sendTrigger(EVT_robot_aligned);
             }
         }
     }
 
-    // // monitor distance
-    // if ((notifyDistance != 0.0) && (distance > notifyDistance)) {
-    //     syslog(LOG_NOTICE, "%08u, distance reached", clock->now());
-    //     notifyDistance = 0.0; // event to be sent only once
-    //     stateMachine->sendTrigger(EVT_dist_reached);
-    // }
-    // modify end by Furuta 2020.09.23
+    // monitor distance
+    if ((notifyDistance != 0.0) && (distance > notifyDistance)) {
+         syslog(LOG_NOTICE, "%08u, distance reached", clock->now());
+         notifyDistance = 0.0; // event to be sent only once
+         stateMachine->sendTrigger(EVT_dist_reached);
+    }
     
     // monitor touch sensor
     bool result = check_touch();
@@ -299,7 +297,7 @@ void Observer::operate() {
     // Preparation for slalom climbing
     if(!slalom_flg && !garage_flg){
         if (g_challenge_stepNo == 0 && sonarDistance >= 1 && sonarDistance <= 10 && !move_back_flg){
-            state = ST_slalom;
+            //state = ST_slalom; // cause of defect - removed on Oct.17
             armMotor->setPWM(-50);
             stateMachine->sendTrigger(EVT_slalom_reached);
             g_challenge_stepNo = 1;

@@ -126,14 +126,15 @@ const char stateName[][ST_NAME_LEN] = {
 #define EVT_line_found      12
 #define EVT_dist_reached    13
 #define EVT_tilt            14
-
 #define EVT_slalom_reached  15
 #define EVT_slalom_challenge    16
 #define EVT_block_challenge 17
 #define EVT_block_area_in   18
 #define EVT_line_on_pid_cntl    19
 #define EVT_line_on_p_cntl  20
-#define EVT_NAME_LEN        21  // maximum number of characters for an event name
+#define EVT_robot_aligned  21
+#define EVT_NAME_LEN        22  // maximum number of characters for an event name
+
 const char eventName[][EVT_NAME_LEN] = {
     "EVT_cmdStart_L",
     "EVT_cmdStart_R",
@@ -155,7 +156,8 @@ const char eventName[][EVT_NAME_LEN] = {
     "EVT_block_challenge",
     "EVT_block_area_in",
     "EVT_line_on_pid_cntl",
-    "EVT_line_on_p_cntl"
+    "EVT_line_on_p_cntl",
+    "EVT_robot_aligned"
 };
 
 typedef struct {

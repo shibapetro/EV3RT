@@ -37,7 +37,7 @@ void StateMachine::initialize() {
     lineTracer = new LineTracer(leftMotor, rightMotor, tailMotor);
     lineTracer->activate();
     challengeRunner = new ChallengeRunner(leftMotor, rightMotor, tailMotor,armMotor);
-    challengeRunner->activate();
+    //challengeRunner->activate();  // cause of defect - removed on Oct.17
     
     ev3_led_set_color(LED_ORANGE); /* 初期化完了通知 */
 
@@ -86,6 +86,7 @@ void StateMachine::sendTrigger(uint8_t event) {
                     wakeupMain();
                     break;
                 case EVT_dist_reached:
+                case EVT_robot_aligned:
                     state = ST_blind;
                     blindRunner->haveControl();
                     break;
@@ -93,6 +94,10 @@ void StateMachine::sendTrigger(uint8_t event) {
                 case EVT_bk2bl:
                     break;
                 case EVT_sonar_On:
+                    if (observer->getDistance() >= 12000) {
+                        state = ST_slalom;
+                        challengeRunner->haveControl();
+                    }
                     break;
                 case EVT_sonar_Off:
                     break;
