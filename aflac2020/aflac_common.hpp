@@ -65,9 +65,7 @@ using namespace ev3api;
 #define P_CONST           0.85D
 #define I_CONST            0.0000001D
 #define D_CONST            0.5D
-//#define SPEED_NORM           50
 #define GS_TARGET            47
-
 
 #define SPEED_NORM           50
 #define SPEED_SLOW           30

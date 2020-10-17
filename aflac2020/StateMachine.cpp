@@ -119,6 +119,12 @@ void StateMachine::sendTrigger(uint8_t event) {
                         lineTracer->haveControl();
                     }
                     break;
+                case EVT_sonar_On: // just in case transition to st_tracing failed
+                    if (observer->getDistance() >= DIST_end_blind) {
+                        state = ST_slalom;
+                        challengeRunner->haveControl();
+                    }
+                    break;
                 // case EVT_tilt: // Ignore EVT_TILT as SPEED_BLIND -> SPEED_SLOW may generate EVT_TILT
                 case EVT_cmdStop:
                     state = ST_end;

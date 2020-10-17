@@ -90,7 +90,7 @@ void ChallengeRunner::runChallenge() {
         //スラローム専用処理
         case 0:
             printf("ぶつかり\n");
-            haveControl();
+            //haveControl();
             setPwmLR(20,20,Mode_speed_constant,1);
             clock->sleep(800);
             setPwmLR(10,10,Mode_speed_constant,1);
