@@ -90,6 +90,10 @@ using namespace ev3api;
 #define CMD_STOP_S      'S'
 #define CMD_STOP_s      's'
 
+// key distance
+#define DIST_force_blind    700
+#define DIST_end_blind      11600
+
 // machine state
 #define ST_start        0
 #define ST_tracing      1

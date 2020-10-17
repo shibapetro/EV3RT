@@ -46,8 +46,8 @@ const struct courseSection courseMap[] = {
 	{"Bst12", 9095, 0.0}, // 9105
 	{"Bcv13", 9888,-0.3}, // 9898
 	{"Bst14",10770, 0.0}, // 10780
-	{"Rcv15",11600,-0.247},
-	{"Lcv15",11600,-0.247}
+	{"Rcv15",DIST_end_blind,-0.247},
+	{"Lcv15",DIST_end_blind,-0.247}
 }; // Note: size of this array is given by sizeof(courseMap)/sizeof(*courseMap)
 const char sBcv01[] = "Bcv01";
 const int32_t d_cv01_midpoint = (755 + 1821) / 2; // <--- this has to agree with st00 and cv01 end points in the course map above!!!
