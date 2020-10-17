@@ -115,6 +115,7 @@ void StateMachine::sendTrigger(uint8_t event) {
                 case EVT_dist_reached:
                     if (observer->getDistance() >= DIST_end_blind) {
                         state = ST_tracing;
+                        lineTracer->setSpeed(SPEED_SLOW);
                         lineTracer->haveControl();
                     }
                     break;
