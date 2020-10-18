@@ -43,9 +43,9 @@ const struct courseSection courseMap[] = {
 	{"Bcv09", 6567, 0.45},
 	{"Bst10", 6905, 0.0},
 	{"Bcv11", 7700, 0.3},
-	{"Bst12", 9095, 0.0},
-	{"Bcv13", 9891,-0.3}, // 9888
-	{"Bst14",10770, 0.0}, // 10770
+	{"Bst12", 9088, 0.0}, // 9095
+	{"Bcv13", 9888,-0.3}, // 9891
+	{"Bst14",10763, 0.0}, // 10770
 	{"Rcv15",DIST_end_blind,-0.247},
 	{"Lcv15",DIST_end_blind,-0.247}
 }; // Note: size of this array is given by sizeof(courseMap)/sizeof(*courseMap)
