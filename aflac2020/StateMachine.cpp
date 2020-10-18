@@ -125,6 +125,9 @@ void StateMachine::sendTrigger(uint8_t event) {
                         challengeRunner->haveControl();
                     }
                     break;
+                case EVT_robot_aligned:
+                    syslog(LOG_NOTICE, "%08u, StateMachine::sendTrigger(): EVT_robot_aligned too late and ignored", clock->now());
+                    break;
                 // case EVT_tilt: // Ignore EVT_TILT as SPEED_BLIND -> SPEED_SLOW may generate EVT_TILT
                 case EVT_cmdStop:
                     state = ST_end;
