@@ -47,7 +47,7 @@ void BlindRunner::operate() {
 	if (currentSection < courseMapSize - 1 && d >= (courseMap[currentSection].sectionEnd - (d_offset==__INT32_MAX__?0:d_offset))) {
 		currentSection++;
 		syslog(LOG_NOTICE, "%08lu, section %s entered at %d", clock->now(), courseMap[currentSection].id, d);
-	} else if (currentSection == courseMapSize  - 1 && d >= (courseMap[currentSection].sectionEnd - d_offset)) {
+	} else if (currentSection == courseMapSize  - 1 && d >= (courseMap[currentSection].sectionEnd - (d_offset==__INT32_MAX__?0:d_offset))) {
 		if (!stopping) {
 			stopping = true;
 			_debug(syslog(LOG_NOTICE, "%08lu, BlindRunner course map exhausted", clock->now()));
