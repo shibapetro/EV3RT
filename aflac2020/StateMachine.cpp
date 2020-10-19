@@ -101,6 +101,13 @@ void StateMachine::sendTrigger(uint8_t event) {
                     break;
                 case EVT_sonar_Off:
                     break;
+                case EVT_black_found:
+                    //printf("EVT_black_found");
+                    lineTracer->setSpeed(10);
+                    break;
+                case EVT_distance_over:
+                    lineTracer->setSpeed(30);
+                    break;    
                 case EVT_cmdStop:
                     state = ST_stopping;
                     observer->notifyOfDistance(FINAL_APPROACH_LEN);
@@ -167,7 +174,7 @@ void StateMachine::sendTrigger(uint8_t event) {
                     break;
                 case EVT_line_on_p_cntl:
                     lineTracer->haveControl();
-                    lineTracer->setSpeed(30);
+                    lineTracer->setSpeed(25);
                     lineTracer->setCntlP(true);
                     break;
                 case EVT_line_on_pid_cntl:

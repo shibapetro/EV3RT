@@ -68,7 +68,7 @@ using namespace ev3api;
 #define GS_TARGET            47
 
 #define SPEED_NORM           50
-#define SPEED_SLOW           30
+#define SPEED_SLOW           40
 #define SPEED_RECOVER        10
 #define SPEED_BLIND          75
 #define TURN_MIN            -16  // minimum value PID calculator returns
@@ -135,7 +135,9 @@ const char stateName[][ST_NAME_LEN] = {
 #define EVT_line_on_pid_cntl    19
 #define EVT_line_on_p_cntl  20
 #define EVT_robot_aligned  21
-#define EVT_NAME_LEN        22  // maximum number of characters for an event name
+#define EVT_black_found        22
+#define EVT_distance_over   23
+#define EVT_NAME_LEN        24  // maximum number of characters for an event name
 
 const char eventName[][EVT_NAME_LEN] = {
     "EVT_cmdStart_L",
@@ -159,7 +161,9 @@ const char eventName[][EVT_NAME_LEN] = {
     "EVT_block_area_in",
     "EVT_line_on_pid_cntl",
     "EVT_line_on_p_cntl",
-    "EVT_robot_aligned"
+    "EVT_robot_aligned",
+    "EVT_black_found",
+    "EVT_distance_over"
 };
 
 typedef struct {

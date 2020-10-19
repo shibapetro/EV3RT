@@ -36,11 +36,11 @@ private:
     SonarSensor*    sonarSensor;
     GyroSensor*     gyroSensor;
     ColorSensor*    colorSensor;
-    double distance, azimuth, locX, locY, aveDiffAng, deltaDiff, prevDeltaDiff, prevDis, prevDisX, prevDisY;
-    int16_t traceCnt, prevGS, curRgbSum, prevRgbSum, curAngle, prevAngle, curDegree180, prevDegree180,curDegree360, prevDegree360,accumuDegree,turnDegree;
-    int32_t prevAngL, prevAngR, notifyDistance, gsDiff, timeDiff, sonarDistance, diffAng, sumDiffAng, countAng;
+    double distance, azimuth, locX, locY, aveDiffAng, deltaDiff, prevDeltaDiff, prevDis, prevDisX, prevDisY,tempDis;
     double integD, integDL, integDR;
-    int8_t process_count,root_no;
+    int8_t process_count,root_no,line_on_stat,exception_stat;
+    int16_t traceCnt, prevGS, curRgbSum, prevRgbSum, curAngle, prevAngle, curDegree180, prevDegree180,curDegree360, prevDegree360,accumuDegree,turnDegree;
+    int32_t prevAngL, prevAngR, notifyDistance, gsDiff, timeDiff, prevSonarDis, curSonarDis, diffAng, sumDiffAng, countAng;
     uint64_t curTime, prevTime;
     bool touch_flag, sonar_flag, backButton_flag, lost_flag, frozen, blue_flag, blue2_flg, slalom_flg, line_over_flg, move_back_flg,garage_flg;
 
@@ -68,7 +68,7 @@ public:
     void reset();
     void notifyOfDistance(int32_t delta);
     int32_t getDistance();
-    int32_t getSonarDistance();
+    int32_t getcurSonarDis();
     int16_t getAzimuth();
     int16_t getDegree();
     int32_t getLocX();

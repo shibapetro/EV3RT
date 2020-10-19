@@ -52,6 +52,7 @@ void BlindRunner::operate() {
 			stopping = true;
 			_debug(syslog(LOG_NOTICE, "%08lu, BlindRunner course map exhausted", clock->now()));
 			observer->notifyOfDistance(0); // give control back to LineTracer
+			g_challenge_stepNo = 900; //sano_t
 		}
 	}
 

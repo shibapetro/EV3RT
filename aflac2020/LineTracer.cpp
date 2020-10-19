@@ -32,6 +32,14 @@ void LineTracer::operate() {
         turn = calcPropP(); /* 比例制御*/
         forward = speed;
 
+    }else if(g_challenge_stepNo ==902){
+        turn = 0;
+        forward = -25;
+
+    }else if(g_challenge_stepNo ==903){
+        turn = -20;
+        forward = 0;
+
     }else {
         forward = speed; //前進命令
         /*
