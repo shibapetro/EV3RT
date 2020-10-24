@@ -35,7 +35,7 @@ void StateMachine::initialize() {
     observer->activate();
     blindRunner = new BlindRunner(leftMotor, rightMotor, tailMotor);
     lineTracer = new LineTracer(leftMotor, rightMotor, tailMotor);
-    lineTracer->activate();
+    //lineTracer->activate();
     challengeRunner = new ChallengeRunner(leftMotor, rightMotor, tailMotor,armMotor);
     //challengeRunner->activate();  // cause of defect - removed on Oct.17
     
@@ -63,7 +63,8 @@ void StateMachine::sendTrigger(uint8_t event) {
                     
                     /* ジャイロセンサーリセット */
                     gyroSensor->reset();
-                    ev3_led_set_color(LED_GREEN); /* スタート通知 */
+                    //ev3_led_set_color(LED_GREEN); /* スタート通知 */
+                    lineTracer->activate();
                     
                     observer->freeze();
                     lineTracer->freeze();
