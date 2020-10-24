@@ -13,12 +13,14 @@
 #include <stdlib.h>
 
 BlindRunner::BlindRunner(Motor* lm, Motor* rm, Motor* tm) : LineTracer(lm, rm, tm) {
+/*
 #if defined(MAKE_SIM)
     _debug(syslog(LOG_NOTICE, "%08lu, BlindRunner attempts to read profile in simulator environment", clock->now()));
 	readPropFile("BlindRunner_prop.txt");
 #else
 	readPropFile("/ev3rt/res/BlindRunner_prop.txt");
 #endif
+*/
 	leftMotor  = lm;
 	rightMotor = rm;
 	tailMotor  = tm;
