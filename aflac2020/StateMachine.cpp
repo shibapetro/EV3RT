@@ -28,8 +28,8 @@ void StateMachine::initialize() {
     steering    = new Steering(*leftMotor, *rightMotor);
     
     /* LCD画面表示 */
-    ev3_lcd_fill_rect(0, 0, EV3_LCD_WIDTH, EV3_LCD_HEIGHT, EV3_LCD_WHITE);
-    ev3_lcd_draw_string("EV3way-ET aflac2020", 0, CALIB_FONT_HEIGHT*1);
+    //ev3_lcd_fill_rect(0, 0, EV3_LCD_WIDTH, EV3_LCD_HEIGHT, EV3_LCD_WHITE);
+    //ev3_lcd_draw_string("EV3way-ET aflac2020", 0, CALIB_FONT_HEIGHT*1);
     
     observer = new Observer(leftMotor, rightMotor, armMotor, tailMotor, touchSensor, sonarSensor, gyroSensor, colorSensor);    observer->freeze(); // Do NOT attempt to collect sensor data until unfreeze() is invoked
     observer->activate();
@@ -39,7 +39,7 @@ void StateMachine::initialize() {
     challengeRunner = new ChallengeRunner(leftMotor, rightMotor, tailMotor,armMotor);
     //challengeRunner->activate();  // cause of defect - removed on Oct.17
     
-    ev3_led_set_color(LED_ORANGE); /* 初期化完了通知 */
+    //ev3_led_set_color(LED_ORANGE); /* 初期化完了通知 */
 
     state = ST_start;
 }

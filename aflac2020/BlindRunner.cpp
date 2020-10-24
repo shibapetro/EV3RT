@@ -39,7 +39,7 @@ void BlindRunner::haveControl() {
     // ログ出力
     syslog(LOG_NOTICE, "%08lu, BlindRunner has control", clock->now());
 	syslog(LOG_NOTICE, "%08lu, section %s entered", clock->now(), courseMap[currentSection].id);
-	ev3_led_set_color(LED_GREEN);
+	//ev3_led_set_color(LED_GREEN);
 }
 
 void BlindRunner::operate() {
