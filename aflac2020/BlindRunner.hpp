@@ -4,24 +4,19 @@
 //
 //  Copyright © 2020 Ahiruchan Koubou. All rights reserved.
 //
-
 #ifndef BlindRunner_hpp
 #define BlindRunner_hpp
-
 #include "aflac_common.hpp"
 #include "LineTracer.hpp"
 #include <stdio.h>
-
 #define PERIOD_SPEED_CHG 200 * 1000 // Trace message in every 200 ms
 #define PROP_NAME_LEN	48	// プロパティー名の最大長
 #define NUM_PROPS	13	// プロパティーの個数
-
 struct courseSection {
 	char	id[6];
 	int32_t sectionEnd;
 	double  curvature;
 };
-
 // section id starts with L for LineTracer deligaton
 //                   with B for SPEED_BLIND
 //                   with R to return to LineTracer 
@@ -61,7 +56,6 @@ const struct courseSection courseMap[] = {
 }; // Note: size of this array is given by sizeof(courseMap)/sizeof(*courseMap)
 const char sBcv01[] = "Bcv01";
 const int32_t d_cv01_midpoint = (755 + 1821) / 2; // <--- this has to agree with st00 and cv01 end points in the course map above!!!
-
 class BlindRunner : public LineTracer {
 private:
 	int16_t s_trace_counter;
@@ -71,13 +65,11 @@ private:
 	int		courseMapSize, currentSection, speedChgCnt;
 	int32_t d_offset, d_cv01_line_lost, d_cv01_line_found;
 	bool	stopping;
-
 	struct property{
 		char name[PROP_NAME_LEN];
 		int value;
 	};
 	struct property props[NUM_PROPS];
-
 	int readLine( FILE* file, char* dst, size_t len );
 	void readPropFile( const char* filename );
 	int getProp( const char* propname );
@@ -89,5 +81,4 @@ public:
     void operate(); // method to invoke from the cyclic handler
     ~BlindRunner();
 };
-
 #endif /* BlindRunner_hpp */
