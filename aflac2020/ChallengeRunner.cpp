@@ -320,7 +320,7 @@ void ChallengeRunner::runChallenge() {
                 setPwmLR(10,10,Mode_speed_constant,1);
             }else{
                 setPwmLR(15,15,Mode_speed_constant,1);
-                clock->sleep(460);
+                clock->sleep(550);
                 setPwmLR(-11,12,Mode_speed_constant,1);
             }
             break;
@@ -414,7 +414,7 @@ void ChallengeRunner::runChallenge() {
         //     break;
         case 170:
             rest(200);
-            setPwmLR(50,50,Mode_speed_constant,1);
+            setPwmLR(25,25,Mode_speed_increaseLR,30);
             break;
         case 171://hinu
             rest(200);
@@ -449,7 +449,11 @@ void ChallengeRunner::runChallenge() {
             }
             break;
         case 201:
-            setPwmLR(45,50,Mode_speed_constant,1);
+            if (_LEFT == 1){
+                setPwmLR(35,40,Mode_speed_constant,1);
+            }else{
+                setPwmLR(40,35,Mode_speed_constant,1);
+            }            
             break;
         case 210:
             if (_LEFT == 1){
@@ -515,9 +519,11 @@ void ChallengeRunner::runChallenge() {
             setPwmLR(50,50,Mode_speed_decreaseLR,300);
             break;
         case 264:
-            pwm_L = _EDGE * -20;
-            pwm_R = _EDGE * 20;
-            setPwmLR(pwm_L,pwm_R,Mode_speed_decreaseLR,300);
+             if (_LEFT == 1){
+                setPwmLR(3,37,Mode_speed_constant,1);
+            }else{
+                setPwmLR(37,3,Mode_speed_constant,1);
+            }
             break;
         case 265:
             setPwmLR(50,50,Mode_speed_decreaseLR,300);

@@ -164,6 +164,15 @@ void StateMachine::sendTrigger(uint8_t event) {
                 case EVT_slalom_challenge:
                     challengeRunner->runChallenge();
                     break;
+                case EVT_line_on_pid_cntl: //hinutest
+                    lineTracer->haveControl();
+                    lineTracer->setSpeed(50);
+                    lineTracer->setCntlP(false);
+                    break;
+                case EVT_block_area_in: //hinutest
+                    challengeRunner->haveControl();
+                    challengeRunner->runChallenge();
+                    break;
                 default:
                     break;
             }

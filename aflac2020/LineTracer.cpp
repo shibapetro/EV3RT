@@ -58,6 +58,9 @@ void LineTracer::operate() {
         // PID control by Gray Scale with blue cut
         int16_t sensor = g_grayScaleBlueless;
         int16_t target = GS_TARGET;
+        if (g_challenge_stepNo == 141){
+            target = 30;
+        }
 
         turn = _EDGE * ltPid->compute(sensor, target);
         //turn = ltPid->compute(sensor, target);
@@ -78,7 +81,7 @@ void LineTracer::operate() {
     //     _debug(syslog(LOG_NOTICE, "%08u, LineTracer::operate(): distance = %d, azimuth = %d, x = %d, y = %d", clock->now(), observer->getDistance(), observer->getAzimuth(), observer->getLocX(), observer->getLocY()));
     //     */
     // }
-    //printf("cntl_p_flg=%d,forward=%d, turn=%d, pwm_L = %d, pwm_R = %d\n",cntl_p_flg,forward, turn,pwm_L,pwm_R);
+    //printf("cntl_p_flg=%d,forward=%d, g_grayScaleBlueless=%d, turn=%d, pwm_L = %d, pwm_R = %d\n",cntl_p_flg,forward, g_grayScaleBlueless, turn,pwm_L,pwm_R);
 }
 
 int8_t LineTracer::getSpeed() {
