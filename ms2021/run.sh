@@ -71,7 +71,6 @@ JUMP=0
 FOURIER=""
 
 cd $ETROBO_ROOT
-sim
 if [ ! -d $DSTDIR ]; then
     mkdir -p $DSTDIR
 fi
@@ -134,6 +133,7 @@ for ARG in $JUMP; do
     fi
 done
 
+sim
 curl -X POST -H "Content-Type: application/json" -d @${SRCDIR}/init_JUMP_${JUMP}.json http://localhost:54000
 
 for N in `seq ${COUNT}`; do

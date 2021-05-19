@@ -124,9 +124,48 @@ protected:
     bool updated, earned;
 };
 
+/* argument -> 100 = 1 sec */
+class IsTimeEarned : public BrainTree::Node {
+public:
+    IsTimeEarned(int32_t t) : deltaTimeTarget(t),updated(false),earned(false),flg(false) {}
+     Status update() override {
+        if (!updated) {
+            originalTime = round((int32_t)clock->now()/10000);
+            updated = true;
+        }
+        deltaTime = round((int32_t)clock->now() / 10000) - originalTime;
+
+        if (deltaTime >= deltaTimeTarget ) {
+            if (!earned) {
+                 _log("Delta %d getnow= %d", deltaTime,clock->now());
+                earned = true;
+            }
+            return Status::Success;
+        } else {
+            return Status::Failure;
+        }
+    }
+protected:
+    int32_t deltaTimeTarget, originalTime, deltaTime;
+    bool updated, earned, flg;
+};
+
+class SetSpeed : public BrainTree::Node {
+public:
+    SetSpeed(int s) : speed(s) {}
+    Status update() override {
+        blackboard->setInt(STR(BoardItem.SPEED), speed);
+        _log("Speed set to %d at absolute distance %d.", speed, plotter->getDistance());
+        return Status::Success;
+    }
+protected:
+    int speed;
+};
+
 class TraceLine : public BrainTree::Node {
 public:
-    TraceLine(int s, int t, double p, double i, double d) : speed(s),target(t),traceCnt(0),prevAngL(0),prevAngR(0) {
+    TraceLine(int s, int t, double p, double i, double d)
+    : speed(s),target(t),traceCnt(0),changeSpeedCnt(0),prevAngL(0),prevAngR(0),steadySpeed(false) {
         ltPid = new PIDcalculator(p, i, d, PERIOD_UPD_TSK, -speed, speed);
     }
     ~TraceLine() {
@@ -136,6 +175,25 @@ public:
         int16_t sensor;
         int8_t forward, turn, pwm_L, pwm_R;
         rgb_raw_t cur_rgb;
+
+        /* check blackboard every PERIOD_SPEED_CHANGE
+           and see if new speed is set */
+        if (++changeSpeedCnt * PERIOD_UPD_TSK >= PERIOD_SPEED_CHANGE) {
+            changeSpeedCnt = 0;
+            int speedBB = blackboard->getInt(STR(BoardItem.SPEED));
+            if (speedBB > speed) {
+                speed++;
+                steadySpeed = false;
+            } else if (speedBB < speed) {
+                speed--;
+                steadySpeed = false;
+            } else {
+                if (!steadySpeed) {
+                    _log("Speed reached to %d at absolute distance %d.", speed, plotter->getDistance());
+                    steadySpeed = true;
+                }
+            }
+        }
 
         colorSensor->getRawColor(cur_rgb);
         sensor = cur_rgb.r;
@@ -170,7 +228,8 @@ protected:
     PIDcalculator* ltPid;
     int32_t prevAngL, prevAngR;
 private:
-    int traceCnt;
+    bool steadySpeed;
+    int traceCnt, changeSpeedCnt;
 };
 
 /*  usage:
@@ -332,6 +391,27 @@ void main_task(intptr_t unused) {
             .composite<BrainTree::ParallelSequence>(2,2)
                 .leaf<IsDistanceEarned>(BLUE_DISTANCE)
                 .composite<BrainTree::MemSequence>()
+                    .leaf<SetSpeed>(SPEED_NORM)
+                    .leaf<IsTimeEarned>(10) /* 500 ms */
+                    .leaf<SetSpeed>(90)
+                    .leaf<IsDistanceEarned>(1700)
+                    .leaf<SetSpeed>(SPEED_NORM)
+                    .leaf<IsDistanceEarned>(600) /* 2300 */
+                    .leaf<SetSpeed>(85)
+                    .leaf<IsDistanceEarned>(700) /* 3000 */
+                    .leaf<SetSpeed>(SPEED_NORM)
+                    .leaf<IsDistanceEarned>(400) /* 3400 */
+                    .leaf<SetSpeed>(80)
+                    .leaf<IsDistanceEarned>(600) /* 4000 */
+                    .leaf<SetSpeed>(SPEED_NORM)
+                    .leaf<IsDistanceEarned>(2100) /* 6100 */
+                    .leaf<SetSpeed>(85)
+                    .leaf<IsDistanceEarned>(500) /* 6600 */
+                    .leaf<SetSpeed>(SPEED_NORM)
+                    .leaf<IsDistanceEarned>(1400) /* 8000 */
+                    .leaf<SetSpeed>(95)
+                    .leaf<IsDistanceEarned>(2000) /* 10000 */
+                    .leaf<SetSpeed>(SPEED_NORM)
                     .leaf<IsBlueDetected>()
                     .leaf<IsBlackDetected>()
                     .leaf<IsBlueDetected>()
